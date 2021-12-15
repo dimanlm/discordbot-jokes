@@ -1,41 +1,62 @@
-// const { Discord, Client, Intents } = require("discord.js");
+const fs = require('fs')
 const config = require("./config.json");
 
-const { Client, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const { Client, Intents, Collection } = require('discord.js');
+const chuckBot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
 const axios = require('axios')
 
 const prefix = '--';
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+/********************************************************/
+
+chuckBot.commandsCollection = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const requestedCommand = require(`./commands/${file}`);
+	chuckBot.commandsCollection.set(requestedCommand.name, requestedCommand);
+}
+
+/********************************************************/
+
+chuckBot.on('ready', () => {
+    console.log(`Logged in as ${chuckBot.user.tag}!`);
 });
 
-client.on('message', function(msg) {
+chuckBot.on('message', function(msg) {
 
-    if (msg.author.bot) return;
-    if (!msg.content.startsWith(prefix)) return;
+    if (msg.author.bot ) return;
+    //if (!msg.content.startsWith(prefix)) return;
   
-    const commandBody = msg.content.slice(prefix.length);
-    const args = commandBody.split(' ');
+    const args = msg.content.slice(prefix.length).split(' ');
     const command = args.shift().toLowerCase();
-  
-    if (command === "ping") {
-        const timeTaken = Date.now() - msg.createdTimestamp;
-        msg.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
-    
-    }else if (command === "joke") {
-        axios.get('http://api.icndb.com/jokes/random')
-            .then( response => {console.log(response.data),
-                msg.reply(response.data.value.joke)
-            })
-            .catch( error => console.log(error))
+    //console.info(`${command}`);
+    if (!chuckBot.commandsCollection.has(command)) return;
+
+    try {
+        chuckBot.commandsCollection.get(command).execute(msg, args);
+    } catch (error) {
+        console.error(error);
+        msg.reply('there was an error trying to execute that command!');
     }
+  
+    // if (command === "ping") {
+    //     const timeTaken = Date.now() - msg.createdTimestamp;
+    //     msg.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
+    // }
+
+    // else if (command === "joke") {
+    //     axios.get('http://api.icndb.com/jokes/random')
+    //         .then( response => {console.log(response.data),
+    //             msg.reply(response.data.value.joke)
+    //         })
+    //         .catch( error => console.log(error))
+    // }
 
 });
 
 
 
 // login method to start the bot
-client.login(config.CHUCK_TOKEN);
-
+chuckBot.login(config.CHUCK_TOKEN);
