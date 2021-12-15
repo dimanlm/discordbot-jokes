@@ -1,10 +1,8 @@
 const fs = require('fs')
-const config = require("./config.json");
+const { CHUCK_TOKEN } = require("./config.json");
 
 const { Client, Intents, Collection } = require('discord.js');
 const chuckBot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-
-const axios = require('axios')
 
 const prefix = '--';
 
@@ -26,12 +24,11 @@ chuckBot.on('ready', () => {
 
 chuckBot.on('message', function(msg) {
 
-    if (msg.author.bot ) return;
-    //if (!msg.content.startsWith(prefix)) return;
+    if (msg.author.bot || !msg.content.startsWith(prefix)) return;
   
     const args = msg.content.slice(prefix.length).split(' ');
     const command = args.shift().toLowerCase();
-    //console.info(`${command}`);
+
     if (!chuckBot.commandsCollection.has(command)) return;
 
     try {
@@ -40,23 +37,8 @@ chuckBot.on('message', function(msg) {
         console.error(error);
         msg.reply('there was an error trying to execute that command!');
     }
-  
-    // if (command === "ping") {
-    //     const timeTaken = Date.now() - msg.createdTimestamp;
-    //     msg.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
-    // }
-
-    // else if (command === "joke") {
-    //     axios.get('http://api.icndb.com/jokes/random')
-    //         .then( response => {console.log(response.data),
-    //             msg.reply(response.data.value.joke)
-    //         })
-    //         .catch( error => console.log(error))
-    // }
-
 });
 
 
-
 // login method to start the bot
-chuckBot.login(config.CHUCK_TOKEN);
+chuckBot.login(CHUCK_TOKEN);
