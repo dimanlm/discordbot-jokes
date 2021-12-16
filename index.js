@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { CHUCK_TOKEN } = require("./config.json");
-
 const { Client, Intents, Collection } = require('discord.js');
+
 const chuckBot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 const prefix = '--';
@@ -27,7 +27,7 @@ chuckBot.on('message', function(msg) {
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
   
     const args = msg.content.slice(prefix.length).split(' ');
-    const command = args.shift().toLowerCase();
+    const command = args.shift();
 
     if (!chuckBot.commandsCollection.has(command)) return;
 
