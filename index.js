@@ -20,6 +20,7 @@ for (const file of commandFiles) {
 
 chuckBot.on('ready', () => {
     console.log(`Logged in as ${chuckBot.user.tag}!`);
+    chuckBot.user.setActivity('Chuck Norris movies', { type: 'WATCHING' });
 });
 
 chuckBot.on('message', function(msg) {

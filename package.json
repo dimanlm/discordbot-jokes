@@ -1,6 +1,9 @@
 {
   "name": "chuckbot",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.13.0"
+  },
   "description": "Chuck Norris joke bot",
   "main": "index.js",
   "scripts": {
