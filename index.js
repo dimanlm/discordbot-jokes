@@ -20,11 +20,11 @@ for (const file of commandFiles) {
 
 chuckBot.on('ready', () => {
     console.log(`Logged in as ${chuckBot.user.tag}!`);
-    chuckBot.user.setActivity('Chuck Norris movies', { type: 'WATCHING' });
+    chuckBot.user.setActivity('Chuck Norris movies', { type: 'WATCHING' }); // set a Status 
 });
 
 chuckBot.on('message', function(msg) {
-
+    
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
   
     const args = msg.content.slice(prefix.length).split(' ');
