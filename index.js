@@ -1,10 +1,10 @@
 const fs = require('fs')
-const { CHUCK_TOKEN } = require("./config.json");
+const { CHUCK_TOKEN } = require("./data/config.json");
 const { Client, Intents, Collection } = require('discord.js');
 
 const chuckBot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-const prefix = '--';
+const prefix = '%';
 
 /********************************************************/
 

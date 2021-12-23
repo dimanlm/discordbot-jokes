@@ -5,3 +5,4 @@ module.exports = {
         msg.reply('pong');
     },
   };
+
