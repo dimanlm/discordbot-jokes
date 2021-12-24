@@ -36,12 +36,16 @@ module.exports = {
                 client.reply(response.data[0].translations[0].text);
             }).catch(function (error) {
                 console.error(error);
-            
+                            
                 let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
-                if (!prefixes.PREFIX) {
-                    prefixes.PREFIX = '%';
-                };
-                client.reply('Sorry, I could not translate the joke. Type `' + prefixes.PREFIX + 'lang` to see the available languages.');
+                if (!prefixes[client.guild.id]){
+                    prefixes[client.guild.id] = {
+                        prefixes: '%'
+                    };
+                }
+                let prefix = prefixes[client.guild.id].prefixes;   
+                
+                client.reply('Sorry, I could not translate the joke. Type `' + prefix + 'lang` to see the available languages.');
             });
         }else{
             client.reply(message);
