@@ -28,10 +28,12 @@ chuckBot.on('message', function(msg) {
     // find the prefix in prefix.json file
     let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
     // if the prefix.json file is empty, a default prefix will be used (%)
-    if (!prefixes.PREFIX) {
-        prefixes.PREFIX = '%';
+    if (!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+            prefixes: '%'
         };
-    let prefix = prefixes.PREFIX;
+    }
+    let prefix = prefixes[msg.guild.id].prefixes;
     
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
   

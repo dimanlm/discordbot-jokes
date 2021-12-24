@@ -9,10 +9,16 @@ module.exports = {
     msgTranslation: function (client, message){
         // First, we retrieve the language in which the user wants to see the jokes
         let language = JSON.parse(fs.readFileSync("./data/language.json"));
-        LANG  = language.LANG;
+        // if the language.json file is empty, a default language is English
+        if (!language[client.guild.id]){
+            language[client.guild.id] = {
+                language: 'en'
+            };
+        }
+        let LANG = language[client.guild.id].language;
 
-        // Default language is English
-        if (LANG!=="en"){
+        // If language != default (English)
+        if (LANG!=='en'){
             var options = {
                 method: 'POST',
                 url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
