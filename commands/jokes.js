@@ -4,7 +4,7 @@ const axios = require('axios');
 
 module.exports = {
     name: 'joke',
-    description: 'Fetching a joke',
+    description: '*(optional category or id)* : Fetching a random joke if no arguments are given',
     execute(msg, args) {
 
         switch (typeof(args[0])) {

@@ -2,7 +2,7 @@ const axios = require('axios')
 
 module.exports = {
     name: 'jokeCategories',
-    description: 'Fetching the list of joke categories',
+    description: ': Fetches the list of joke categories',
     execute(msg, args) {
         axios.get('http://api.icndb.com/categories')
             .then( response => {

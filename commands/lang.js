@@ -4,7 +4,7 @@ const fs = require('fs');
 
 module.exports = {
     name: 'lang',
-    description: 'The user can set a language in which he wants to see the jokes.',
+    description: '*(optional language)* : The user can set a language in which he wants to see the jokes.',
     execute(msg, args) {
         // // check if the user has enough permissions to change the prefix
         // if(!msg.member.permissions.has("MANAGE_SERVER")) return msg.reply("You don't have enough permissions to change the prefix");
