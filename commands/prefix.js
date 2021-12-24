@@ -12,7 +12,7 @@ module.exports = {
         let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
 
         // modify the old values with the new ones and write them into the json file.
-        if (args[0]){
+        if (args[0] !== undefined){
             prefixes[msg.guild.id] = {
                 prefix: args[0]
             };
