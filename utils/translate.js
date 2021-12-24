@@ -36,7 +36,7 @@ module.exports = {
                 client.reply(response.data[0].translations[0].text);
             }).catch(function (error) {
                 console.error(error);
-            
+
                 let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
                 if (!prefixes[client.guild.id]){
                     prefixes[client.guild.id] = {
