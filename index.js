@@ -4,7 +4,7 @@ const { Client, Intents, Collection } = require('discord.js');
 
 const chuckBot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-const prefix = '%';
+//const prefix = '%';
 
 /********************************************************/
 
@@ -24,6 +24,16 @@ chuckBot.on('ready', () => {
 });
 
 chuckBot.on('message', function(msg) {
+
+    // find the prefix in prefix.json file
+    let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
+    // if the prefix.json file is empty, a default prefix will be used (%)
+    if (!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+            prefixes: '%'
+        };
+    }
+    let prefix = prefixes[msg.guild.id].prefixes;
     
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
   
