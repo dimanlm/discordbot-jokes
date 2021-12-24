@@ -13,8 +13,9 @@ module.exports = {
 
         // modify the old values with the new ones and write them into the json file.
         prefixes[msg.guild.id] = {
-            prefixes: args[0]
+            prefix: args[0]
         };
+        
         fs.writeFile("./data/prefix.json", JSON.stringify(prefixes), (err) => {
             if (err) console.log(err);
         })

@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs');
 const { TRANSLATE_TOKEN } = require('../data/config.json');
+const setPrefix = require('./set-prefix.js');
 
 module.exports = {
     /**
@@ -37,14 +38,7 @@ module.exports = {
             }).catch(function (error) {
                 console.error(error);
 
-                let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
-                if (!prefixes[client.guild.id]){
-                    prefixes[client.guild.id] = {
-                        prefixes: '%'
-                    };
-                }
-                let prefix = prefixes[client.guild.id].prefixes;            
-
+                let prefix = setPrefix.findPrefix(client);
                 client.reply('Sorry, I could not translate the joke. Type `' + prefix + 'lang` to see the available languages.');
             });
         }else{
