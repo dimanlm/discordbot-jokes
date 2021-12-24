@@ -17,12 +17,12 @@ module.exports = {
                     axios.get('http://api.icndb.com/jokes/random?limitTo=[' +args[0]+ ']')
                         .then( response => {
                             if (response.data.value.joke===undefined){
-                                msg.reply('**' + args[0] + '** category does not exist! \nUse `jokeCategories` command to see the list of categories');
+                                messageReply = ('**' + args[0] + '** category does not exist! \nUse `jokeCategories` command to see the list of categories');
                             }else{
                                 response.data.value.joke.replace(/(&quot\;)/g,"\"")
                                 messageReply = '**' + args[0] + ' joke**: ' + response.data.value.joke; // fetches a joke from 'args' category
-                                translate.jokeTranslation(msg, messageReply);
-                            } 
+                            }
+                            translate.msgTranslation(msg, messageReply);
                         })
                         .catch( error => console.log(error));
                 // if the argument equals an integer, then the argument is a joke's id
@@ -30,12 +30,12 @@ module.exports = {
                     axios.get('http://api.icndb.com/jokes/' + argValue)
                         .then( response => {
                             if (response.data.value.joke===undefined){
-                                msg.reply('Joke number **' + args[0] + '** does not exist! \nUse `jokeCount` command to see the how many jokes there are');
+                                messageReply = ('Joke number **' + args[0] + '** does not exist! \nUse `jokeCount` command to see the how many jokes there are');
                             }else{
                                 response.data.value.joke.replace(/(&quot\;)/g,"\"")
                                 messageReply = 'Joke n**' + args[0] + '**: ' + response.data.value.joke; // fetches the joke number 'args' (index)
-                                translate.jokeTranslation(msg, messageReply);
                             }
+                            translate.msgTranslation(msg, messageReply);
                         })
                         .catch( error => console.log(error));
                 }
@@ -47,7 +47,7 @@ module.exports = {
                     .then( response => {
                         response.data.value.joke.replace(/(&quot\;)/g,"\"")
                         let messageReply = ("A random joke: " + response.data.value.joke)
-                        translate.jokeTranslation(msg, messageReply);
+                        translate.msgTranslation(msg, messageReply);
                     })
                     .catch( error => console.log(error));
                 break;
