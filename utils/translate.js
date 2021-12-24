@@ -38,10 +38,14 @@ module.exports = {
                 console.error(error);
             
                 let prefixes = JSON.parse(fs.readFileSync("./data/prefix.json"));
-                if (!prefixes.PREFIX) {
-                    prefixes.PREFIX = '%';
-                };
-                client.reply('Sorry, I could not translate the joke. Type `' + prefixes.PREFIX + 'lang` to see the available languages.');
+                if (!prefixes[msg.guild.id]){
+                    prefixes[msg.guild.id] = {
+                        prefixes: '%'
+                    };
+                }
+                let prefix = prefixes[msg.guild.id].prefixes;            
+
+                client.reply('Sorry, I could not translate the joke. Type `' + prefix + 'lang` to see the available languages.');
             });
         }else{
             client.reply(message);
