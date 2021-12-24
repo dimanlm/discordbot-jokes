@@ -46,7 +46,7 @@ module.exports = {
                 axios.get('http://api.icndb.com/jokes/random')
                     .then( response => {
                         response.data.value.joke.replace(/(&quot\;)/g,"\"")
-                        let messageReply = (response.data.value.joke)
+                        let messageReply = ("A random joke: " + response.data.value.joke)
                         translate.jokeTranslation(msg, messageReply);
                     })
                     .catch( error => console.log(error));

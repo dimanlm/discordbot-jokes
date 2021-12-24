@@ -1,10 +1,13 @@
 const axios = require('axios');
-const { LANG } = require('../data/language.json');
+const fs = require('fs');
 const { TRANSLATE_TOKEN } = require('../data/config.json');
 
 module.exports = {
     jokeTranslation: function (client, message){
-        if (LANG!=='en'){
+        let language = JSON.parse(fs.readFileSync("./data/language.json"));
+        LANG  = language.LANG;
+
+        if (LANG!=="en"){
             var options = {
                 method: 'POST',
                 url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
@@ -19,7 +22,6 @@ module.exports = {
             };
             
             axios.request(options).then(function (response) {
-                console.log(response.data[0].translations[0].text);
                 client.reply(response.data[0].translations[0].text);
             }).catch(function (error) {
                 console.error(error);
